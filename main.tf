@@ -71,4 +71,8 @@ resource "aws_s3_object" "webapp" {
   bucket       = aws_s3_bucket.bucket.id
   content      = file("${path.module}/assets/index.html")
   content_type = "text/html"
+  depends_on = [
+    aws_s3_bucket_ownership_controls.bucket,
+    aws_s3_bucket_public_access_block.bucket,
+  ]
 }
