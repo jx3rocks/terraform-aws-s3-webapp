@@ -34,7 +34,7 @@ resource "aws_s3_bucket_ownership_controls" "bucket" {
   }
 }
 
-resource "aws_s3_bucket_public_access_block" bucketweb" {
+resource "aws_s3_bucket_public_access_block" "bucket" {
   bucket = aws_s3_bucket.bucket.id
 
   block_public_acls       = false
@@ -63,6 +63,10 @@ resource "aws_s3_bucket_policy" "policy" {
     ]
 }
 EOF
+  depends_on = [
+    aws_s3_bucket_ownership_controls.bucket,
+    aws_s3_bucket_public_access_block.bucket,
+  ]
 }
 
 resource "aws_s3_object" "webapp" {
